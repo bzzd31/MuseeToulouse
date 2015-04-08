@@ -9,8 +9,8 @@ class Adresse {
 
     static constraints = {
         numero nullable: false
-        rue nullable: false
+        rue blank: false
         codePostal nullable: false
-        ville nullable: false
+        ville blank: false
     }
 }

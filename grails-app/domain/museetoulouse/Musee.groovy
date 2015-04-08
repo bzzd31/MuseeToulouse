@@ -12,11 +12,17 @@ class Musee {
         adresse : Adresse
     ]
 
+    static hasOne = [
+        gestionnaire : Gestionnaire
+    ]
+
     static constraints = {
-        nom nullable: false
-        horairesOuverture blank: true
-        telephone blank: true
+        nom blank: false
+        horairesOuverture blank: false
+        telephone nullable: true
         accesMetro nullable: true
         accesBus nullable: true
+        gestionnaire nullable: false
+        adresse nullable: false
     }
 }
