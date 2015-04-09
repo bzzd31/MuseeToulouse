@@ -14,13 +14,14 @@ class MuseeServiceIntegrationTestSpec extends Specification {
     void "test insertion ou mise Ã  jour d'un musee avec une adresse et un gestionnaire"() {
 
         given:"un Musee"
-        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36",adresse: new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse"))
+        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36")
+        Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
 
         and: "un gestionnaire"
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
 
         when: "on tente de répercuter en base la création ou la modification de musee"
-        Musee resultMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire)
+        Musee resultMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,uneAdresse,unGestionnaire)
 
         then: "le musee resultant pointe sur le musee initale"
         resultMusee == unMusee
@@ -37,6 +38,9 @@ class MuseeServiceIntegrationTestSpec extends Specification {
         and: "le musee a pour gestionnaire le gestionnaire passé en paramètre"
         resultMusee.gestionnaire == unGestionnaire
 
+        and: "le musee a pour adresse l'adresse passé en paramètre"
+        resultMusee.adresse == uneAdresse
+
         and:"le gestionnaire a dans sa liste de musee le musee passé en paramètre"
         unGestionnaire.listeMusees.contains(resultMusee)
     }
@@ -44,9 +48,10 @@ class MuseeServiceIntegrationTestSpec extends Specification {
     void "test suppression d'un musee"() {
 
         given: "un musee existante en base"
-        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36",adresse:  new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse"))
+        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36")
+        Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
-        unMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire)
+        unMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,uneAdresse,unGestionnaire)
 
 
         when:"on tente de supprimer le musee"
