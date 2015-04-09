@@ -47,10 +47,13 @@ body {
 	        box-shadow: 0 0 0.3em #255b17;
 }
 
-#grailsLogo {
+#banniere {
 	background-color: #abbf78;
 }
 
+.banniereImage {
+    margin-left: 30%;
+}
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
 .ie7 body,
@@ -89,7 +92,7 @@ img {
 
 /* GENERAL */
 
-#grailsLogo a {
+#banniere a {
 	display: inline-block;
 	margin: 1em;
 }
