@@ -16,6 +16,10 @@ class Musee {
         gestionnaire : Gestionnaire
     ]
 
+    /*static hasMany = [
+        listeDemandesVisite : DemandeVisite
+    ]*/
+
     static constraints = {
         nom blank: false
         horairesOuverture blank: false
