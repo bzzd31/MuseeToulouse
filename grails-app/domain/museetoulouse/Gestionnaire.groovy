@@ -11,4 +11,10 @@ class Gestionnaire {
     static constraints = {
         nom nullable: false
     }
+
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

@@ -13,4 +13,10 @@ class Adresse {
         codePostal nullable: false
         ville blank: false
     }
+
+
+    @Override
+    public String toString() {
+        return numero + " " + rue + " " + codePostal + " " + ville;
+    }
 }

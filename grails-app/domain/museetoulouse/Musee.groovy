@@ -8,9 +8,7 @@ class Musee {
     String accesMetro
     String accesBus
 
-    Musee(gestionnaire, adresse, String nom, String telephone, String horairesOuverture, String accesMetro, String accesBus) {
-        this.gestionnaire = gestionnaire
-        this.adresse = adresse
+    Musee(String nom, String telephone, String horairesOuverture, String accesMetro, String accesBus) {
         this.nom = nom
         this.telephone = telephone
         this.horairesOuverture = horairesOuverture
@@ -38,5 +36,11 @@ class Musee {
         accesBus nullable: true
         gestionnaire nullable: false
         adresse nullable: false
+    }
+
+
+    @Override
+    public String toString() {
+        return nom;
     }
 }
