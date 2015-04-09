@@ -21,7 +21,7 @@ class MuseeServiceIntegrationTestSpec extends Specification {
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
 
         when: "on tente de répercuter en base la création ou la modification de musee"
-        Musee resultMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,uneAdresse,unGestionnaire)
+        Musee resultMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)
 
         then: "le musee resultant pointe sur le musee initale"
         resultMusee == unMusee
@@ -51,7 +51,7 @@ class MuseeServiceIntegrationTestSpec extends Specification {
         Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36")
         Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
-        unMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,uneAdresse,unGestionnaire)
+        unMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)
 
 
         when:"on tente de supprimer le musee"

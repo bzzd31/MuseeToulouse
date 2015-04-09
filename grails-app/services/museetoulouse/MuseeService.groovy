@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class MuseeService {
 
-   Musee insertOrUpdateMuseeForGestionnaireAndAdress(Musee unMusee,Adresse uneAdresse,Gestionnaire unGestionnaire){
+   Musee insertOrUpdateMuseeForGestionnaireAndAdress(Musee unMusee,Gestionnaire unGestionnaire,Adresse uneAdresse){
        uneAdresse.save();
        unMusee.adresse = uneAdresse;
        unGestionnaire.addToListeMusees(unMusee);
