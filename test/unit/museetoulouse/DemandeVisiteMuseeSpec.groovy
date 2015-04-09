@@ -10,21 +10,17 @@ import spock.lang.Unroll
 @TestFor(DemandeVisiteMusee)
 class DemandeVisiteMuseeSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
 
     @Unroll
     void "test la validite d'une DemandeVisiteMusee valide"() {
 
-        given: "un Musée et une DemandeVisite"
+        given: "une date,un Musée et une DemandeVisite"
+        Date date = new Date()
         Musee unMusee = Mock(Musee)
         DemandeVisite uneDemandeVisite = Mock(DemandeVisite)
 
         when: "une demande de visite musée est créée"
-        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(musee: unMusee, demandeVisite: uneDemandeVisite)
+        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(dateDemande: date, musee: unMusee, demandeVisite: uneDemandeVisite)
 
         then: "le gestionnaire est valide"
         demandeVisiteMusee.validate() == true
@@ -32,6 +28,7 @@ class DemandeVisiteMuseeSpec extends Specification {
         and:
         demandeVisiteMusee.demandeVisite == uneDemandeVisite
         demandeVisiteMusee.musee == unMusee
+        demandeVisiteMusee.dateDemande == date
 
     }
 
@@ -43,13 +40,19 @@ class DemandeVisiteMuseeSpec extends Specification {
         DemandeVisite uneDemandeVisite = Mock(DemandeVisite)
 
         when: "une demande de visite musée est créée"
-        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(musee: unMusee,demandeVisite:  null)
+        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(dateDemande: new Date(), musee: unMusee,demandeVisite:  null)
 
         then: "la DemandeVisite est invalide"
         demandeVisiteMusee.validate() == false
 
         when: "une demande de visite musée est créée"
-        demandeVisiteMusee = new DemandeVisiteMusee(musee:  null, demandeVisite: uneDemandeVisite)
+        demandeVisiteMusee = new DemandeVisiteMusee(dateDemande: new Date(), musee:  null, demandeVisite: uneDemandeVisite)
+
+        then: "la DemandeVisite est invalide"
+        demandeVisiteMusee.validate() == false
+
+        when: "une demande de visite musée est créée"
+        demandeVisiteMusee = new DemandeVisiteMusee(dateDemande: null, musee:  unMusee, demandeVisite: uneDemandeVisite)
 
         then: "la DemandeVisite est invalide"
         demandeVisiteMusee.validate() == false

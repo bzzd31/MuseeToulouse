@@ -2,6 +2,8 @@ package museetoulouse
 
 class DemandeVisiteMusee {
 
+    Date dateDemande;
+
     static belongsTo = [
             musee : Musee,
             demandeVisite : DemandeVisite
@@ -10,5 +12,6 @@ class DemandeVisiteMusee {
     static constraints = {
         musee nullable: false
         demandeVisite nullable: false
+        dateDemande nullable: false
     }
 }

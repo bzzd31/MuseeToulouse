@@ -35,7 +35,7 @@ class MuseeController {
             return
         }
 
-        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire());
+        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
 
         request.withFormat {
             form multipartForm {
@@ -62,7 +62,7 @@ class MuseeController {
             return
         }
 
-        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire());
+        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
 
         request.withFormat {
             form multipartForm {
