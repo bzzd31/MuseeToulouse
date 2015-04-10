@@ -84,11 +84,12 @@
 		<div id="page-body" role="main">
 			<h1>Bienvenue sur l'application de réservation de visite des Musées de Toulouse</h1></br>
 			<p>Ce site à pour but de vous aider à visiter les Musées de Toulouse</p></br>
-            <form>
+            <g:form controller="musee" action="search" method="post">
                 Entrez un nom de musée :</br>
-                <input type="text" name = "NomMusee" size="15"></br></br>
+                <input type="text" name = "nomMusee" size="15"></br></br>
                 Choississez le code postal :</br>
                 <select name="codePostal" size="1">
+                    <option>
                     <option>31000
                     <option>31200
                     <option>31300
@@ -96,9 +97,13 @@
                     <option>31500
                 </select></br></br>
                 Entrez le nom de la rue du musée :</br>
-                <input type="text" name = "NomRue" size="15"></br></br>
-                <input type="submit" name="Rechercher" size="15">
-            </form>
+                <input type="text" name = "nomRue" size="15"></br></br>
+                <input type="submit" name="rechercher" size="15"></br>
+            </g:form>
 		</div>
+        <div id="controller-list" role="navigation">
+            <h2></h2>
+            <a href="http://localhost:8080/MuseeToulouse/musee/index">Lien liste muséé :</a>
+        </div>
 	</body>
 </html>
