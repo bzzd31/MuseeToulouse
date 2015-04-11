@@ -10,16 +10,15 @@ class MuseeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     MuseeService museeService;
+
+    def search() {
+        def museeList = museeService.searchMusee(params.nomMusee, params.codePostal, params.nomRue)
+        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.size()])
+    }
+
     def index(Integer max) {
-        params.max = Math.min(max ?: 13, 100)
-        if (flash.results != null) {
-            System.out.println("LIIIIISTE BIATCH")
-            List<Musee> listeMusee = flash.results
-            respond listeMusee, model:[museeInstanceCount: Musee.count()]
-        }
-        else {
-            respond Musee.list(params), model:[museeInstanceCount: Musee.count()]
-        }
+        params.max = Math.min(max ?: 5, 100)
+        respond Musee.list(params), model:[museeInstanceCount: Musee.count()]
     }
 
     def show(Musee museeInstance) {
@@ -107,10 +106,5 @@ class MuseeController {
             }
             '*'{ render status: NOT_FOUND }
         }
-    }
-
-    def search() {
-        flash.results = museeService.searchMusee((LinkedHashMap)params);
-        redirect(action: "index")
     }
 }

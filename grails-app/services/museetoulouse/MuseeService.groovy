@@ -18,27 +18,25 @@ class MuseeService {
        unMusee.delete();
    }
 
-    List<Musee> searchMusee(LinkedHashMap<String, Object> stringObjectLinkedHashMap) {
+    List<Musee> searchMusee(String inNomMusee, String inCodePostal, String inNomRue) {
+        System.out.println(inNomMusee + " " + inCodePostal + " " + inNomRue)
         def criteria = Musee.createCriteria()
-        String nomMusee = stringObjectLinkedHashMap.get("nomMusee")
-        String codePostal = stringObjectLinkedHashMap.get("codePostal")
-        String nomRue = stringObjectLinkedHashMap.get("nomRue")
-
         List<Musee> res = criteria.list {
-            if (nomMusee) {
-                like 'nom', "%${nomMusee}%"
+            if (inNomMusee) {
+                like 'nom', "%${inNomMusee}%".toUpperCase()
             }
-            if (codePostal) {
+            if (inCodePostal) {
                 adresse {
-                    eq ('codePostal', codePostal.toInteger().intValue())
+                    eq ('codePostal', inCodePostal.toInteger().intValue())
                 }
             }
-            if (nomRue) {
+            if (inNomRue) {
                 adresse {
-                    like 'rue', "%${nomRue}%"
+                    like 'rue', "%${inNomRue}%".toUpperCase()
                 }
             }
         }
+        System.out.println(res)
         res
     }
 }

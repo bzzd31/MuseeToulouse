@@ -35,6 +35,8 @@
 						<g:sortableColumn property="accesBus" title="${message(code: 'musee.accesBus.label', default: 'Acces Bus')}" />
 					
 						<th><g:message code="musee.gestionnaire.label" default="Gestionnaire" /></th>
+
+                        <th><g:message code="musee.adresse.label" default="Adresse" /></th>
 					
 					</tr>
 				</thead>
@@ -43,16 +45,20 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></td>
-					
-						<td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
-					
+
 						<td>${fieldValue(bean: museeInstance, field: "telephone")}</td>
+
+                        <td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
 					
 						<td>${fieldValue(bean: museeInstance, field: "accesMetro")}</td>
 					
 						<td>${fieldValue(bean: museeInstance, field: "accesBus")}</td>
 					
 						<td>${fieldValue(bean: museeInstance, field: "gestionnaire")}</td>
+
+                        <td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
+
+                        <td><g:actionSubmit action="search" value="Ajouter aux Favoris" /></td>
 					
 					</tr>
 				</g:each>

@@ -98,7 +98,8 @@
                 </select></br></br>
                 Entrez le nom de la rue du musée :</br>
                 <input type="text" name = "nomRue" size="15"></br></br>
-                <input type="submit" name="rechercher" size="15"></br>
+                <g:actionSubmit action="search" value="Rechercher" /></br>
+               <!-- <input type="submit" name="rechercher" size="15">-->
             </g:form>
 		</div>
         <div id="controller-list" role="navigation">
