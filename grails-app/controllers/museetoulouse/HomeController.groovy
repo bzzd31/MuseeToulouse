@@ -11,12 +11,10 @@ class HomeController {
     MuseeService museeService;
 
     def index(){
-        System.out.println("yea")
-        params.max = 2
-        def museeListFavoris = museeService.searchFavoris(true,params)
+        def museeFavoris = museeService.searchFavoris(true)
         params.max = 3
-        def museeList  = museeService.searchFavoris(false,params)
-       [museeList:museeList,museeListCount:3,museeInstanceList: museeListFavoris, museeInstanceCount: museeListFavoris.totalCount]
+        def museeList  = museeService.searchFavoris(false, params)
+        [museeFavorisList:museeFavoris,museeInstanceList: museeList, museeInstanceCount: museeList.totalCount]
     }
     def updateFavorisIndex(){
         def musee = Musee.get(params.id)
@@ -24,10 +22,6 @@ class HomeController {
             musee.favoris = !(musee.favoris)
             museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee,musee.getGestionnaire(),musee.getAdresse());
         }
-        params.max = 2
-        def museeListFavoris = museeService.searchFavoris(true,params)
-        params.max = 3
-        def museeList  = museeService.searchFavoris(false,params)
     }
 
     protected void notFound() {

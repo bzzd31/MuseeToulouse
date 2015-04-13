@@ -14,17 +14,16 @@ class MuseeController {
     def codePostal
     def rue
 
-    def updateFavoris(){
+    def updateFavorisIndex() {
         def musee = Musee.get(params.id)
-        if (musee){
+        if (musee) {
             musee.favoris = !(musee.favoris)
-            update(musee)
+            museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee, musee.getGestionnaire(), musee.getAdresse());
         }
-        render ''
+       /* params.max = 2
+        def museeListFavoris = museeService.searchFavoris(true, params)*/
     }
-
     def search() {
-        System.out.println("nom Musee "+params.nomMusee);
         if(nomMusee == null || params.nomMusee != null){
             nomMusee = params.nomMusee
         }
@@ -36,7 +35,8 @@ class MuseeController {
         }
         params.max = 5
         def museeList = museeService.searchMusee(nomMusee, codePostal, rue,params)
-        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
+        def museeFavoris = museeService.searchFavoris(true)
+        render(view: 'index', model: [museeFavorisList: museeFavoris, museeFavorisCount: museeFavoris.size(), museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
     }
 
     def index(Integer max) {

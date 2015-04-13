@@ -19,7 +19,6 @@ class MuseeService {
    }
 
     def searchMusee(String inNomMusee, String inCodePostal, String inNomRue,def params) {
-        System.out.println(inNomMusee + " " + inCodePostal + " " + inNomRue)
         def criteria = Musee.createCriteria()
         def res = criteria.list (max:params.max,offset:params.offset){
             if (inNomMusee) {
@@ -36,7 +35,6 @@ class MuseeService {
                 }
             }
         }
-        //System.out.println(res)
         res
     }
 
@@ -44,6 +42,14 @@ class MuseeService {
         def criteria = Musee.createCriteria()
         def res = criteria.list (max:params.max,offset:params.offset){
                     eq ('favoris', inFavoris)
+        }
+        res
+    }
+
+    def searchFavoris(boolean inFavoris){
+        def criteria = Musee.createCriteria()
+        def res = criteria.list(){
+            eq ('favoris', inFavoris)
         }
         res
     }
