@@ -43,11 +43,11 @@
 			#page-body {
 				margin-left: 10%;
 			}
-            #page-body-right {
+            #page-body-left {
                 float: left;
                 margin-bottom: 30%;
             }
-            #page-body-left {
+            #page-body-right {
                 float: right;
                 margin-right: 10%;
                 width: 50%;
@@ -93,7 +93,7 @@
 		<div id="page-body" role="main">
 			<h1>Bienvenue sur l'application de réservation de visite des Musées de Toulouse</h1></br>
 			<p>Ce site à pour but de vous aider à visiter les Musées de Toulouse</p></br>
-            <div id="page-body-right">
+            <div id="page-body-left">
             <g:form controller="musee" action="search" method="post">
                 Entrez un nom de musée :</br>
                 <input type="text" name = "nomMusee" size="15"></br></br>
@@ -109,10 +109,9 @@
                 Entrez le nom de la rue du musée :</br>
                 <input type="text" name = "nomRue" size="15"></br></br>
                 <g:actionSubmit action="search" value="Rechercher" /></br>
-               <!-- <input type="submit" name="rechercher" size="15">-->
             </g:form>
         </div>
-            <div id="page-body-left" role="main">
+            <div id="page-body-right" role="main">
                 <table>
                     <thead>
                     <tr>
