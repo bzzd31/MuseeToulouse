@@ -24,13 +24,13 @@ class MuseeController {
     }
     def search() {
         System.out.println("nom Musee "+params.nomMusee);
-        if(nomMusee == null && params.nomMusee != null){
+        if(nomMusee == null || params.nomMusee != null){
             nomMusee = params.nomMusee
         }
-        if(codePostal == null && params.codePostal != null){
+        if(codePostal == null || params.codePostal != null){
             codePostal = params.codePostal
         }
-        if(rue == null && params.nomRue != null){
+        if(rue == null || params.nomRue != null){
             rue = params.nomRue
         }
         params.max = 5

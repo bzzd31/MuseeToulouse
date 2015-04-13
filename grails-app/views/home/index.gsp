@@ -48,12 +48,18 @@
                 margin-bottom: 30%;
             }
             #page-body-left {
+                margin-top: 100px;
                 float: right;
                 margin-right: 10%;
                 width: 50%;
                 border: 1px solid black;
             }
-
+            #page-body-left-favoris {
+                float: right;
+                margin-right: 10%;
+                width: 50%;
+                border: 1px solid black;
+            }
 			h2 {
 				margin-top: 1em;
 				margin-bottom: 0.3em;
@@ -112,7 +118,30 @@
                <!-- <input type="submit" name="rechercher" size="15">-->
             </g:form>
         </div>
+            <div id="page-body-left-favoris" role="main">
+                <h2> MUSEE </h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
+                        <g:sortableColumn property="favoris" title="${message(code: 'musee.telephone.label', default: 'Favoris')}" />
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${museeList}" status="i" var="museeInstance">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></td>
+                            <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavoris', id:museeInstance.id
+                            )}"  />
+                            </td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
             <div id="page-body-left" role="main">
+                <h2> MUSEE EN FAVORIS</h2>
                 <table>
                     <thead>
                     <tr>

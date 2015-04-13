@@ -48,9 +48,9 @@
 					
 						<td><g:link action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></td>
 
-						<td>${fieldValue(bean: museeInstance, field: "telephone")}</td>
+						<td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
 
-                        <td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
+                        <td>${fieldValue(bean: museeInstance, field: "telephone")}</td>
 					
 						<td>${fieldValue(bean: museeInstance, field: "accesMetro")}</td>
 					
@@ -60,7 +60,7 @@
 
                         <td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
 
-                        <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavoris', id:museeInstance.id,
+                        <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavoris', id:museeInstance.id
                                 )}"/>
                         </td>
                     </tr>
