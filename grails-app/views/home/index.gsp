@@ -114,13 +114,13 @@
                 </select></br></br>
                 Entrez le nom de la rue du musée :</br>
                 <input type="text" name = "nomRue" size="15"></br></br>
-                <g:actionSubmit action="search" value="Rechercher" /></br>
+                <g:actionSubmit  action="search" value="Rechercher" /></br>
                <!-- <input type="submit" name="rechercher" size="15">-->
             </g:form>
         </div>
             <div id="page-body-left-favoris" role="main">
                 <h2> MUSEE </h2>
-                <table>
+                <table enable=${museeList?true:false}>
                     <thead>
                     <tr>
                         <g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
@@ -132,7 +132,7 @@
                     <g:each in="${museeList}" status="i" var="museeInstance">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                             <td><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></td>
-                            <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavoris', id:museeInstance.id
+                            <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
                             )}"  />
                             </td>
                         </tr>

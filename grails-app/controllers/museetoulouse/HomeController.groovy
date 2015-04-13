@@ -18,7 +18,7 @@ class HomeController {
         def museeList  = museeService.searchFavoris(false,params)
        [museeList:museeList,museeListCount:3,museeInstanceList: museeListFavoris, museeInstanceCount: museeListFavoris.totalCount]
     }
-    def updateFavoris(){
+    def updateFavorisIndex(){
         def musee = Musee.get(params.id)
         if (musee){
             musee.favoris = !(musee.favoris)
@@ -29,6 +29,7 @@ class HomeController {
         params.max = 3
         def museeList  = museeService.searchFavoris(false,params)
     }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

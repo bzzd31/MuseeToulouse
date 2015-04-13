@@ -22,6 +22,7 @@ class MuseeController {
         }
         render ''
     }
+
     def search() {
         System.out.println("nom Musee "+params.nomMusee);
         if(nomMusee == null || params.nomMusee != null){
