@@ -10,10 +10,32 @@ class MuseeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     MuseeService museeService;
+    def nomMusee
+    def codePostal
+    def rue
 
+    def updateFavoris(){
+        def musee = Musee.get(params.id)
+        if (musee){
+            musee.favoris = !(musee.favoris)
+            update(musee)
+        }
+        render ''
+    }
     def search() {
-        def museeList = museeService.searchMusee(params.nomMusee, params.codePostal, params.nomRue)
-        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.size()])
+        System.out.println("nom Musee "+params.nomMusee);
+        if(nomMusee == null && params.nomMusee != null){
+            nomMusee = params.nomMusee
+        }
+        if(codePostal == null && params.codePostal != null){
+            codePostal = params.codePostal
+        }
+        if(rue == null && params.nomRue != null){
+            rue = params.nomRue
+        }
+        params.max = 5
+        def museeList = museeService.searchMusee(nomMusee, codePostal, rue,params)
+        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
     }
 
     def index(Integer max) {

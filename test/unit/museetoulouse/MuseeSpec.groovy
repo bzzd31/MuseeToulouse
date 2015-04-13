@@ -17,34 +17,35 @@ class MuseeSpec extends Specification {
     }
 
     @Unroll
-    void "test la validite d'un musee valide"(String unNom, String unHorairesOuverture, String unTelephone, String unAccesMetro, String unAccesBus, Adresse uneAdresse, Gestionnaire unGestionnaire) {
+    void "test la validite d'un musee valide"(String unNom, String unHorairesOuverture, String unTelephone, String unAccesMetro, String unAccesBus, Adresse uneAdresse, Gestionnaire unGestionnaire,Boolean unFavoris) {
 
         given: "un musee initialise avec nom, horaires d'ouverture, telephone (ou non), un acces métro (ou non), un acces bus (ou non)"
-        Musee musee = new Musee(nom: unNom, horairesOuverture: unHorairesOuverture, telephone: unTelephone, accesMetro: unAccesMetro, accesBus: unAccesBus, adresse: uneAdresse, gestionnaire: unGestionnaire)
+        Musee musee = new Musee(nom: unNom, horairesOuverture: unHorairesOuverture, telephone: unTelephone, accesMetro: unAccesMetro, accesBus: unAccesBus, adresse: uneAdresse, gestionnaire: unGestionnaire,favoris:unFavoris)
 
         expect: "adresse est valide"
         musee.validate() == true
 
         where:
-        unNom       | unHorairesOuverture   | unTelephone       | unAccesMetro      | unAccesBus    | uneAdresse    | unGestionnaire
-        "Augustins" | "14h-18h"             | "05 61 61 63 33"  | null              | null          | Mock(Adresse) | Mock(Gestionnaire)
-        "Augustins" | "14h-18h"             | null              | "Roseraie (A)"    | "36, 38"      | Mock(Adresse) | Mock(Gestionnaire)
+        unNom       | unHorairesOuverture   | unTelephone       | unAccesMetro      | unAccesBus    | uneAdresse    | unGestionnaire     | unFavoris
+        "Augustins" | "14h-18h"             | "05 61 61 63 33"  | null              | null          | Mock(Adresse) | Mock(Gestionnaire) | true
+        "Augustins" | "14h-18h"             | null              | "Roseraie (A)"    | "36, 38"      | Mock(Adresse) | Mock(Gestionnaire) | false
     }
 
     @Unroll
-    void "test l'invalidite d'un musee non valide"(String unNom, String unHorairesOuverture, Adresse uneAdresse, Gestionnaire unGestionnaire) {
+    void "test l'invalidite d'un musee non valide"(String unNom, String unHorairesOuverture, Adresse uneAdresse, Gestionnaire unGestionnaire,Boolean unFavoris) {
 
         given: "un musee initialise sans nom, ou avec rue vide, ou sans codePostal ou avec ville vide"
-        Musee musee = new Musee(nom: unNom, horairesOuverture: unHorairesOuverture, telephone: null, accesMetro: null, accesBus: null, adresse: uneAdresse, gestionnaire: unGestionnaire)
+        Musee musee = new Musee(nom: unNom, horairesOuverture: unHorairesOuverture, telephone: null, accesMetro: null, accesBus: null, adresse: uneAdresse, gestionnaire: unGestionnaire,favoris: unFavoris)
 
         expect: "l'adresse est invalide"
         musee.validate() == false
 
         where:
-        unNom       | unHorairesOuverture   | uneAdresse    | unGestionnaire
-        null        | "14h-18h"             | Mock(Adresse) | Mock(Gestionnaire)
-        "Augustins" | null                  | Mock(Adresse) | Mock(Gestionnaire)
-        "Augustins" | null                  | null          | Mock(Gestionnaire)
-        "Augustins" | "14h-18h"             | Mock(Adresse) | null
+        unNom       | unHorairesOuverture   | uneAdresse    | unGestionnaire     | unFavoris
+        null        | "14h-18h"             | Mock(Adresse) | Mock(Gestionnaire) | true
+        "Augustins" | null                  | Mock(Adresse) | Mock(Gestionnaire) | true
+        "Augustins" | null                  | null          | Mock(Gestionnaire) | true
+        "Augustins" | "14h-18h"             | Mock(Adresse) | null               | true
+        "Augustins" | "14h-18h"             | Mock(Adresse) | Mock(Gestionnaire) | null
     }
 }

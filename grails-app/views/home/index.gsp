@@ -41,8 +41,18 @@
 			}
 
 			#page-body {
-				margin-left: 15%;
+				margin-left: 10%;
 			}
+            #page-body-right {
+                float: left;
+                margin-bottom: 30%;
+            }
+            #page-body-left {
+                float: right;
+                margin-right: 10%;
+                width: 50%;
+                border: 1px solid black;
+            }
 
 			h2 {
 				margin-top: 1em;
@@ -64,7 +74,6 @@
 				list-style-position: inside;
 				margin: 0.25em 0;
 			}
-
 			@media screen and (max-width: 480px) {
 				#status {
 					display: none;
@@ -84,6 +93,7 @@
 		<div id="page-body" role="main">
 			<h1>Bienvenue sur l'application de réservation de visite des Musées de Toulouse</h1></br>
 			<p>Ce site à pour but de vous aider à visiter les Musées de Toulouse</p></br>
+            <div id="page-body-right">
             <g:form controller="musee" action="search" method="post">
                 Entrez un nom de musée :</br>
                 <input type="text" name = "nomMusee" size="15"></br></br>
@@ -101,10 +111,29 @@
                 <g:actionSubmit action="search" value="Rechercher" /></br>
                <!-- <input type="submit" name="rechercher" size="15">-->
             </g:form>
-		</div>
-        <div id="controller-list" role="navigation">
-            <h2></h2>
-            <a href="http://localhost:8080/MuseeToulouse/musee/index">Lien liste muséé :</a>
+        </div>
+            <div id="page-body-left" role="main">
+                <table>
+                    <thead>
+                    <tr>
+                        <g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
+                        <g:sortableColumn property="telephone" title="${message(code: 'musee.telephone.label', default: 'Telephone')}" />
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${museeInstanceList}" status="i" var="museeInstance">
+                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                            <td><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></td>
+                            <td style="height: 100%">${fieldValue(bean: museeInstance, field: "telephone")}</td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <g:paginate max="5" total="${museeInstanceCount ?: 0}" />
+                </div>
+            </div>
         </div>
 	</body>
 </html>

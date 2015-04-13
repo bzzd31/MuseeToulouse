@@ -11,7 +11,7 @@ class DemandeVisiteMuseeControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
         params["dateDemande"] = new Date()
-        params["musee"] = new Musee(nom:"Toto",horairesOuverture:"7h", telephone:"00000000",accesMetro:"ligne B",accesBus:"bus 34,36")
+        params["musee"] = new Musee(nom:"Toto",horairesOuverture:"7h", telephone:"00000000",accesMetro:"ligne B",accesBus:"bus 34,36",favoris:false)
         params["demandeVisite"] = new DemandeVisite(code:1,dateDebutPeriode:new Date(),dateFinPeriode:new Date(), nbPersonnes:12,statut:"Valider")
     }
 

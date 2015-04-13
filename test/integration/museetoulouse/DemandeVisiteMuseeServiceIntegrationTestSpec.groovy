@@ -16,7 +16,7 @@ class DemandeVisiteMuseeServiceIntegrationTestSpec extends Specification {
         DemandeVisiteMusee uneDemandeMusee = new DemandeVisiteMusee(dateDemande: new Date())
 
         and: "un Musee existant en base et une DemandeVisite"
-        Musee unMusee = new Musee(nom:"toto",horairesOuverture:"17h",telephone:"00000000",accesBus:"B",accesMetro:"V")
+        Musee unMusee = new Musee(nom:"toto",horairesOuverture:"17h",telephone:"00000000",accesBus:"B",accesMetro:"V",favoris:false)
         Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
         museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)
@@ -52,7 +52,7 @@ class DemandeVisiteMuseeServiceIntegrationTestSpec extends Specification {
 
         given: "une DemandeVisiteMusee existante en base"
         DemandeVisiteMusee uneDemandeMusee = new DemandeVisiteMusee(dateDemande: new Date())
-        Musee unMusee = new Musee(nom:"toto",horairesOuverture:"17h",telephone:"00000000",accesBus:"B",accesMetro:"V")
+        Musee unMusee = new Musee(nom:"toto",horairesOuverture:"17h",telephone:"00000000",accesBus:"B",accesMetro:"V",favoris:false)
         Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
         museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)

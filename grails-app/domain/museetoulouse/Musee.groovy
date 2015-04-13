@@ -8,12 +8,15 @@ class Musee {
     String accesMetro
     String accesBus
 
-    Musee(String nom, String telephone, String horairesOuverture, String accesMetro, String accesBus) {
+    boolean favoris;
+
+    Musee(String nom, String horairesOuverture, String telephone, String accesMetro, String accesBus,boolean favoris) {
         this.nom = nom
         this.telephone = telephone
         this.horairesOuverture = horairesOuverture
         this.accesMetro = accesMetro
         this.accesBus = accesBus
+        this.favoris = favoris;
     }
 
     static belongsTo = [
@@ -36,6 +39,7 @@ class Musee {
         accesBus nullable: true
         gestionnaire nullable: false
         adresse nullable: false
+        favoris blank:false
     }
 
 

@@ -18,10 +18,10 @@ class MuseeService {
        unMusee.delete();
    }
 
-    List<Musee> searchMusee(String inNomMusee, String inCodePostal, String inNomRue) {
+    def searchMusee(String inNomMusee, String inCodePostal, String inNomRue,def params) {
         System.out.println(inNomMusee + " " + inCodePostal + " " + inNomRue)
         def criteria = Musee.createCriteria()
-        List<Musee> res = criteria.list {
+        def res = criteria.list (max:params.max,offset:params.offset){
             if (inNomMusee) {
                 like 'nom', "%${inNomMusee}%".toUpperCase()
             }
@@ -36,7 +36,15 @@ class MuseeService {
                 }
             }
         }
-        System.out.println(res)
+        //System.out.println(res)
+        res
+    }
+
+    def searchFavoris(def params){
+        def criteria = Musee.createCriteria()
+        def res = criteria.list (max:params.max,offset:params.offset){
+                    eq ('favoris', true)
+        }
         res
     }
 }

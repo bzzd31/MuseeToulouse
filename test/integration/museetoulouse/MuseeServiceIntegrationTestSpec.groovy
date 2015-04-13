@@ -14,7 +14,7 @@ class MuseeServiceIntegrationTestSpec extends Specification {
     void "test insertion ou mise Ã  jour d'un musee avec une adresse et un gestionnaire"() {
 
         given:"un Musee"
-        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36")
+        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36",favoris: false)
         Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
 
         and: "un gestionnaire"
@@ -48,7 +48,7 @@ class MuseeServiceIntegrationTestSpec extends Specification {
     void "test suppression d'un musee"() {
 
         given: "un musee existante en base"
-        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36")
+        Musee unMusee = new Musee(nom: "act1",horairesOuverture: "18h",telephone: "05054050",accesMetro: "ligne B",accesBus: "bus 34,36",favoris:false)
         Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
         Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
         unMusee = museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)

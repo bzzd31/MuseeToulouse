@@ -17,6 +17,7 @@ class MuseeControllerSpec extends Specification {
         params["accesBus"] = 'bus 32,34'
         params["adresse"] = new Adresse(numero:16,rue:"rue de truc", codePostal:31000,ville:"Toulouse");
         params["gestionnaire"] = new Gestionnaire(nom:"toto");
+        params["favoris"] = false;
     }
 
     void "Test the index action returns the correct model"() {

@@ -37,6 +37,8 @@
 						<th><g:message code="musee.gestionnaire.label" default="Gestionnaire" /></th>
 
                         <th><g:message code="musee.adresse.label" default="Adresse" /></th>
+
+                        <g:sortableColumn property="favoris" title="${message(code: 'musee.favoris.label', default: 'Favoris')}" />
 					
 					</tr>
 				</thead>
@@ -58,14 +60,15 @@
 
                         <td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
 
-                        <td><g:actionSubmit action="search" value="Ajouter aux Favoris" /></td>
-					
-					</tr>
+                        <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavoris', id:museeInstance.id,
+                                )}"/>
+                        </td>
+                    </tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${museeInstanceCount ?: 0}" />
+				<g:paginate max="5" total="${museeInstanceCount ?: 0}" />
 			</div>
 		</div>
 	</body>
