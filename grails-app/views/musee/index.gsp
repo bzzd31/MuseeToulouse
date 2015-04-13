@@ -65,6 +65,8 @@
                     <g:each in="${museeFavorisList}" status="i" var="museeInstance">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                             <td><h5><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></h5></td>
+                            <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
+                            )}"  />
                         </tr>
                     </g:each>
                     </tbody>
