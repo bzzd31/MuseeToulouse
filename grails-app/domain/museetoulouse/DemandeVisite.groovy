@@ -11,6 +11,7 @@ class DemandeVisite {
         listeMusee: Musee
     ]*/
 
+
     static constraints = {
         code nullable: false
         dateDebutPeriode nullable: false

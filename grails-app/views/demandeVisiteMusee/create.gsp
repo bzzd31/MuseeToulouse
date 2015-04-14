@@ -1,9 +1,13 @@
+<%@ page import="museetoulouse.Musee" %>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'demandeVisiteMusee.label', default: 'DemandeVisiteMusee')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="DemandeVisiteMusee.js"></script>
 	</head>
 	<body>
 		<a href="#create-demandeVisiteMusee" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -25,12 +29,17 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:demandeVisiteMuseeInstance, action:'save']" >
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
+			<g:form url="[action:'save']" onsubmit="return test()">
+                <g:hiddenField name="museeId" value="${Musee.get(params.id).id}"/>
+                <label name="Musee" id="Musee"/>
+                    ${museetoulouse.Musee.get(params.id)}
+                </label>
+                <p>Date début: <input type="text" id="datepickerDebut" name="dateDebut" onchange="testDateDebut()"></p>
+                <p>Date fin: <input type="text" id="datepickerFin" name="dateFin" onchange="testDateFin()"></p>
+                <g:select name="nbPersonnes" from="${1..6}"
+                          noSelection="['':'Choisissez le nombre de personne']" onchange="testNbPersonne()"/>
 				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}"/>
 				</fieldset>
 			</g:form>
 		</div>

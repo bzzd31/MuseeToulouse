@@ -10,6 +10,7 @@ class DemandeVisiteMuseeService {
             uneDemandeMusee.musee = unMusee
             uneDemandeMusee.demandeVisite = uneDemandeVisite
             uneDemandeMusee.save()
+            uneDemandeMusee
     }
 
    DemandeVisiteMusee deleteDemandeVisiteMusee(DemandeVisiteMusee uneDemandeMusee){

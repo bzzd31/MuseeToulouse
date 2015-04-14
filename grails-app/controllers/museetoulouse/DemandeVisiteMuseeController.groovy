@@ -1,12 +1,13 @@
 package museetoulouse
 
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class DemandeVisiteMuseeController {
-
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     DemandeVisiteMuseeService demandeVisiteMuseeService
     def index(Integer max) {
@@ -23,23 +24,37 @@ class DemandeVisiteMuseeController {
     }
 
     @Transactional
-    def save(DemandeVisiteMusee demandeVisiteMuseeInstance) {
-        if (demandeVisiteMuseeInstance == null) {
-            notFound()
-            return
-        }
+    def save() {
 
-        if (demandeVisiteMuseeInstance.hasErrors()) {
-            respond demandeVisiteMuseeInstance.errors, view: 'create'
-            return
-        }
+        Musee musee = Musee.get(params.museeId)
+        System.out.println("musee"+params.museeId)
+        String dateDebutStr = params.dateDebut
+        String dateFinStr = params.dateFin
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
+        Date dateDebut
+        Date dateFin
+        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(dateDemande: new Date())
+        try {
 
-        demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMuseeInstance,demandeVisiteMuseeInstance.getMusee(),demandeVisiteMuseeInstance.getDemandeVisite())
+            dateDebut = formatter.parse(dateDebutStr)
+            dateFin = formatter.parse(dateFinStr)
+            dateFin = formatter.parse(dateFinStr)
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int nbPersonne = params.nbPersonnes.toInteger().intValue()
+
+        DemandeVisite demandeVisite = new DemandeVisite(code:0,dateDebutPeriode:dateDebut,dateFinPeriode:dateFin,nbPersonnes:nbPersonne,statut:"En Attente")
+
+
+        DemandeVisiteMusee demandeVisiteMuseeInstance = demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMusee,musee,demandeVisite)
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'demandeVisiteMusee.label', default: 'DemandeVisiteMusee'), demandeVisiteMuseeInstance.id])
-                redirect demandeVisiteMuseeInstance
+                redirect controller: "home", action: "index"
             }
             '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }
         }

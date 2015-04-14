@@ -118,14 +118,17 @@
                     <thead>
                     <tr>
                         <g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
+                        <g:sortableColumn property="favoris" title="Favoris"/></th>
+                        <g:sortableColumn property="demandeVisite" title="Demande de Visite"/></th>
                     </tr>
                     </thead>
                     <tbody>
                     <g:each in="${museeFavorisList}" status="i" var="museeInstance">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                             <td><h5><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></h5></td>
-                            <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
+                            <td><g:checkBox  name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
                             )}"  />
+                            <td><g:link controller="demandeVisiteMusee" action="create" id="${museeInstance.id}"><input type="button" value="demande de visite"></g:link></td>
                         </tr>
                     </g:each>
                     </tbody>
@@ -178,7 +181,7 @@
                         <td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
 
                         <td><g:checkBox name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
-                        )}"  />
+                        )};setTimeout('location.reload(true);',1000);" />
                         </td>
                     </tr>
                 </g:each>

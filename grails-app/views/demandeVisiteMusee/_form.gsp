@@ -7,7 +7,7 @@
 		<g:message code="demandeVisiteMusee.musee.label" default="Musee" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="musee" name="musee.id" from="${museetoulouse.Musee.list()}" optionKey="id" required="" value="${demandeVisiteMuseeInstance?.musee?.id}" class="many-to-one"/>
+	<g:textField name="myField" value="${MuseeInstance.name}" />
 
 </div>
 

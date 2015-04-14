@@ -35,10 +35,10 @@ class DemandeVisiteMuseeServiceIntegrationTestSpec extends Specification {
         !resultDemandeMusee.hasErrors()
 
         and:"le musee résultant a un id"
-        resultDemandeMusee.id
+        resultDemandeMusee.id != null
 
         and:"le musee est bien present en base"
-        Musee.findById(resultDemandeMusee.id) != null
+        DemandeVisiteMusee.findById(resultDemandeMusee.id) != null
 
         and: "le musee a pour gestionnaire le gestionnaire passé en paramètre"
         resultDemandeMusee.musee == unMusee
