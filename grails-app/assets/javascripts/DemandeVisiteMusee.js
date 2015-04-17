@@ -27,7 +27,9 @@
             if(!testDateFin()){
                 test = false;
             }
-
+            if(!test){
+                alert("Certain Champs sont mal remplie");
+            }
             return test;
         };
 

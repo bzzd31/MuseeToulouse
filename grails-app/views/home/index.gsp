@@ -45,14 +45,12 @@
 			}
             #page-body-left {
                 float: left;
-                margin-bottom: 21%;
                 width: 30%;
             }
             #page-body-right {
                 float: right;
                 width: 69%;
                 border: 1px solid black;
-                margin-bottom: 5%;
             }
 			h2 {
 				margin-top: 1em;
@@ -87,14 +85,33 @@
 					margin-top: 0;
 				}
 			}
+            #list-musee {
+                align-content: center;
+                margin-top: 25%;
+            }
+            #page-body-right h1 {
+                text-align: center;
+            }
+            #list-musee h1 {
+                text-align: center;
+            }
 		</style>
 	</head>
 	<body>
+    <div class="nav" role="navigation">
+        <ul>
+            <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+            <li><g:link class="list" controller="demandeVisiteMusee" action="index"><g:message message="Demande visite" /></g:link></li>
+        </ul>
+    </div>
+    <g:if test="${flash.message}">
+        <div class="message" role="status">${flash.message}</div>
+    </g:if>
 		<div id="page-body" role="main">
 			<h1>Bienvenue sur l'application de réservation de visite des Musées de Toulouse</h1></br>
 			<p>Ce site à pour but de vous aider à visiter les Musées de Toulouse</p></br>
             <div id="page-body-left">
-            <g:form controller="musee" action="search" method="post">
+            <g:form controller="home" action="search" method="post">
                 Entrez un nom de musée :</br>
                 <input type="text" name = "nomMusee" size="15"></br></br>
                 Choississez le code postal :</br>
@@ -127,19 +144,19 @@
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                             <td><h5><g:link controller="musee" action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "nom")}</g:link></h5></td>
                             <td><g:checkBox  name='favoris' value="${museeInstance.favoris}" onclick="${remoteFunction(action:'updateFavorisIndex', id:museeInstance.id
-                            )}"  />
+                            )};setTimeout('location.reload(true);',1000);"  />
                             <td><g:link controller="demandeVisiteMusee" action="create" id="${museeInstance.id}"><input type="button" value="demande de visite"></g:link></td>
                         </tr>
                     </g:each>
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <g:paginate max="3" total="${museeFavorisCount ?: 0}" offset="${session.museeFavorisParams?.offset}"  params="${[paginate:'Favoris']}" />
+                </div>
             </div>
         </div>
-        <div id="list-musee" class="content scaffold-list" role="main">
-            <h1>Musees pas dans les favoris</h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
+        <div id="list-musee">
+            <h1>Musees</h1>
             <table>
                 <thead>
                 <tr>
@@ -188,7 +205,7 @@
                 </tbody>
             </table>
             <div class="pagination">
-                <g:paginate max="5" total="${museeInstanceCount ?: 0}" />
+                <g:paginate max="5" total="${museeInstanceCount ?: 0}" offset="${session.museeListParams?.offset}"  params="${[paginate:'Musee']}"/>
             </div>
         </div>
 	</body>

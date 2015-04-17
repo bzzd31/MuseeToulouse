@@ -6,15 +6,28 @@ import static org.springframework.http.HttpStatus.*
 
 @Transactional(readOnly = true)
 class HomeController {
-
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     MuseeService museeService;
-
+    def nomMusee
+    def codePostal
+    def rue
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     def index(){
-        def museeFavoris = museeService.searchFavoris(true)
-        params.max = 3
-        def museeList  = museeService.searchFavoris(false, params)
-        [museeFavorisList:museeFavoris,museeInstanceList: museeList, museeInstanceCount: museeList.totalCount]
+        def museeListParams
+        def museeFavorisParams
+        if(params.paginate == 'Favoris'){
+            params.max = 3
+            museeFavorisParams = [max: params.max, offset: params.offset]
+            session.museeFavorisParams = museeFavorisParams
+        } else if(params.paginate == 'Musee') {
+            params.max = 5
+            museeListParams = [max: params.max, offset: params.offset]
+            session.museeListParams = museeListParams
+        }
+        def museeFavoris = museeService.searchFavoris(true, session.museeFavorisParams?: [max: 3, offset: 0])
+        def museeList = museeService.searchMusee(nomMusee, codePostal, rue,session.museeListParams?: [max: 5, offset: 0])
+        params.offset = null
+        params.max = null
+        [museeFavorisList:museeFavoris,museeFavorisCount:museeFavoris.totalCount,museeInstanceList: museeList, museeInstanceCount: museeList.totalCount]
     }
     def updateFavorisIndex(){
         def musee = Musee.get(params.id)
@@ -22,6 +35,22 @@ class HomeController {
             musee.favoris = !(musee.favoris)
             museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee,musee.getGestionnaire(),musee.getAdresse());
         }
+    }
+
+    def search() {
+        if(nomMusee == null || params.nomMusee != null){
+            nomMusee = params.nomMusee
+        }
+        if(codePostal == null || params.codePostal != null){
+            codePostal = params.codePostal
+        }
+        if(rue == null || params.nomRue != null){
+            rue = params.nomRue
+        }
+        params.max = 5
+        def museeList = museeService.searchMusee(nomMusee, codePostal, rue,session.museeListParams?: [max: 5, offset: 0])
+        def museeFavoris = museeService.searchFavoris(true)
+        render(view: 'index', model: [museeFavorisList: museeFavoris, museeFavorisCount: museeFavoris.size(), museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
     }
 
     protected void notFound() {

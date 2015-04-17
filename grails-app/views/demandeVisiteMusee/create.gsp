@@ -30,10 +30,7 @@
 			</ul>
 			</g:hasErrors>
 			<g:form url="[action:'save']" onsubmit="return test()">
-                <g:hiddenField name="museeId" value="${Musee.get(params.id).id}"/>
-                <label name="Musee" id="Musee"/>
-                    ${museetoulouse.Musee.get(params.id)}
-                </label>
+                <g:select name="museeInstance" from="${museeInstance}" value="${museeSelect}" optionKey="id" required="" class="many-to-one"/>
                 <p>Date début: <input type="text" id="datepickerDebut" name="dateDebut" onchange="testDateDebut()"></p>
                 <p>Date fin: <input type="text" id="datepickerFin" name="dateFin" onchange="testDateFin()"></p>
                 <g:select name="nbPersonnes" from="${1..6}"
