@@ -14,11 +14,34 @@ class DemandeVisiteMuseeController {
     DemandeVisiteService demandeVisiteService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond DemandeVisiteMusee.list(params), model: [demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
+        [demandeVisiteMuseeInstanceList:DemandeVisiteMusee.list(params),demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
     }
 
     def show(DemandeVisiteMusee demandeVisiteMuseeInstance) {
         respond demandeVisiteMuseeInstance
+    }
+
+    def codeSearch(){
+        String message
+        DemandeVisiteMusee demandeVisiteMusee
+        if(params.code != null && (((String)params.code).isNumber())){
+            int code =  Integer.parseInt(params.code)
+            DemandeVisite demandeVisites = demandeVisiteService.getDemandeVisiteMusee(code)
+            if(demandeVisites != null){
+                demandeVisiteMusee = demandeVisiteMuseeService.findsDemandeVisite(demandeVisites)
+                if(demandeVisiteMusee != null){
+                    message = "OK Demande Musee Valide"
+                } else {
+                     message = "Erreur impossible de récupérer la liste des demandes"
+                }
+            } else {
+                message = "Erreur Pas de Code Valide"
+            }
+        } else {
+            message = "Erreur Il faut remplir/modifier le champs code"
+        }
+        flash.message = message;
+        render(view: 'index', model: [demandeVisiteMuseeInstanceList:demandeVisiteMusee,demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()])
     }
 
     def create() {
@@ -47,16 +70,26 @@ class DemandeVisiteMuseeController {
             e.printStackTrace();
         }
         int nbPersonne = params.nbPersonnes.toInteger().intValue()
-
-        DemandeVisite demandeVisite = new DemandeVisite(dateDebutPeriode:dateDebut,dateFinPeriode:dateFin,nbPersonnes:nbPersonne,statut:"En Attente")
+        String statut
+        Random rn = new Random();
+        switch (rn.nextInt()%4){
+            case 0:
+                statut ="En Attente"
+                break;
+            case 1:
+                statut ="Confirme"
+                break;
+            default:
+                statut ="Refusee"
+                break;
+        }
+        DemandeVisite demandeVisite = new DemandeVisite(dateDebutPeriode:dateDebut,dateFinPeriode:dateFin,nbPersonnes:nbPersonne,statut:statut)
         int code = demandeVisiteService.getLastedCode(demandeVisite)
         demandeVisite.setCode(code)
         DemandeVisiteMusee demandeVisiteMuseeInstance = demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMusee,musee,demandeVisite)
-
         request.withFormat {
             form multipartForm {
                 flash.message = "Votre Demande de visite a ete enregistré le code de celle ci est "+demandeVisiteMusee.demandeVisite.code
-
                 redirect controller: "home", action: "index"
             }
             '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }

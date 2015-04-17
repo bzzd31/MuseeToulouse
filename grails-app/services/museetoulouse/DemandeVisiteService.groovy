@@ -15,4 +15,9 @@ class DemandeVisiteService {
         code = code+1
         code
     }
+    DemandeVisite getDemandeVisiteMusee(int codeI){
+        List<DemandeVisite> de = DemandeVisite.findAll()
+        def demandeVisite = DemandeVisite.find("from DemandeVisite as d where d.code=? ",[codeI])
+        demandeVisite
+    }
 }

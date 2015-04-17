@@ -13,6 +13,12 @@ class DemandeVisiteMuseeService {
             uneDemandeMusee
     }
 
+    DemandeVisiteMusee findsDemandeVisite(DemandeVisite demande){
+        DemandeVisiteMusee demandeVisiteMusee = DemandeVisiteMusee.find("from DemandeVisiteMusee as d where d.demandeVisite.id =? ",[demande.id])
+        demandeVisiteMusee
+    }
+
+
    DemandeVisiteMusee deleteDemandeVisiteMusee(DemandeVisiteMusee uneDemandeMusee){
        uneDemandeMusee.delete()
        uneDemandeMusee
