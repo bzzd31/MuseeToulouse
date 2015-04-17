@@ -20,13 +20,13 @@ class MuseeService {
 
     def searchMusee(String inNomMusee, String inCodePostal, String inNomRue,def params) {
         def criteria = Musee.createCriteria()
-        def res = criteria.list (max:params.max,offset:params.offset){
+        def res = criteria.list (max:params.max,offset:params.offset) {
             if (inNomMusee) {
                 like 'nom', "%${inNomMusee}%".toUpperCase()
             }
             if (inCodePostal) {
                 adresse {
-                    eq ('codePostal', inCodePostal.toInteger().intValue())
+                    eq('codePostal', inCodePostal.toInteger().intValue())
                 }
             }
             if (inNomRue) {
@@ -34,6 +34,7 @@ class MuseeService {
                     like 'rue', "%${inNomRue}%".toUpperCase()
                 }
             }
+            order("nom","acs")
         }
         res
     }
@@ -42,6 +43,7 @@ class MuseeService {
         def criteria = Musee.createCriteria()
         def res = criteria.list (max:params.max,offset:params.offset){
                     eq ('favoris', inFavoris)
+                    order("nom","acs")
         }
         res
     }
@@ -50,6 +52,7 @@ class MuseeService {
         def criteria = Musee.createCriteria()
         def res = criteria.list(){
             eq ('favoris', inFavoris)
+            order("nom","acs")
         }
         res
     }
