@@ -23,7 +23,7 @@ class DemandeVisiteMuseeController {
 
     def create() {
         List<Musee> musee = museeService.searchFavoris(true)
-        render(view:'create',model:[museeInstance:musee,museeSelect:params.id]);
+        render(view:'create',model:[museeInstance:musee]);
     }
 
     @Transactional

@@ -11,6 +11,9 @@ class HomeController {
     def codePostal
     def rue
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+
+
     def index(){
         def museeListParams
         def museeFavorisParams
@@ -37,6 +40,8 @@ class HomeController {
         }
     }
 
+
+
     def search() {
         if(nomMusee == null || params.nomMusee != null){
             nomMusee = params.nomMusee
@@ -47,10 +52,22 @@ class HomeController {
         if(rue == null || params.nomRue != null){
             rue = params.nomRue
         }
-        params.max = 5
+        def museeListParams
+        def museeFavorisParams
+        if(params.paginate == 'Favoris'){
+            params.max = 3
+            museeFavorisParams = [max: params.max, offset: params.offset]
+            session.museeFavorisParams = museeFavorisParams
+        } else if(params.paginate == 'Musee') {
+            params.max = 5
+            museeListParams = [max: params.max, offset: params.offset]
+            session.museeListParams = museeListParams
+        }
         def museeList = museeService.searchMusee(nomMusee, codePostal, rue,session.museeListParams?: [max: 5, offset: 0])
-        def museeFavoris = museeService.searchFavoris(true)
-        render(view: 'index', model: [museeFavorisList: museeFavoris, museeFavorisCount: museeFavoris.size(), museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
+        def museeFavoris = museeService.searchFavoris(true,session.museeFavorisParams?: [max: 3, offset: 0])
+        params.offset = null
+        params.max = null
+        render(view: 'index', model: [museeFavorisList: museeFavoris, museeFavorisCount: museeFavoris.totalCount, museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
     }
 
     protected void notFound() {

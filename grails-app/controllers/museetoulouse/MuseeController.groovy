@@ -10,34 +10,8 @@ class MuseeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
     MuseeService museeService;
-    def nomMusee
-    def codePostal
-    def rue
 
-    def updateFavorisIndex() {
-        def musee = Musee.get(params.id)
-        if (musee) {
-            musee.favoris = !(musee.favoris)
-            museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee, musee.getGestionnaire(), musee.getAdresse());
-        }
-       /* params.max = 2
-        def museeListFavoris = museeService.searchFavoris(true, params)*/
-    }
-    def search() {
-        if(nomMusee == null || params.nomMusee != null){
-            nomMusee = params.nomMusee
-        }
-        if(codePostal == null || params.codePostal != null){
-            codePostal = params.codePostal
-        }
-        if(rue == null || params.nomRue != null){
-            rue = params.nomRue
-        }
-        params.max = 5
-        def museeList = museeService.searchMusee(nomMusee, codePostal, rue,params)
-        def museeFavoris = museeService.searchFavoris(true)
-        render(view: 'index', model: [museeFavorisList: museeFavoris, museeFavorisCount: museeFavoris.size(), museeInstanceList: museeList, museeInstanceCount: museeList.totalCount])
-    }
+
 
     def index(Integer max) {
         params.max = Math.min(max ?: 5, 100)
