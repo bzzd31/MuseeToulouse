@@ -14,7 +14,8 @@ class DemandeVisiteMuseeController {
     DemandeVisiteService demandeVisiteService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [demandeVisiteMuseeInstanceList:DemandeVisiteMusee.list(params),demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
+        respond DemandeVisiteMusee.list(params), model:[demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
+        //[demandeVisiteMuseeInstanceList:DemandeVisiteMusee.list(params),demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
     }
 
     def show(DemandeVisiteMusee demandeVisiteMuseeInstance) {
@@ -45,14 +46,33 @@ class DemandeVisiteMuseeController {
     }
 
     def create() {
-        List<Musee> musee = museeService.searchFavoris(true)
-        render(view:'create',model:[museeInstance:musee]);
+        respond new DemandeVisiteMusee(params)
+        /*List<Musee> musee = museeService.searchFavoris(true)
+        render(view:'create',model:[museeInstance:musee]);*/
     }
 
     @Transactional
-    def save() {
+    def save(DemandeVisiteMusee demandeVisiteMuseeInstance) {
+        if (demandeVisiteMuseeInstance == null) {
+            notFound()
+            return
+        }
 
-        Musee musee = Musee.get(params.museeInstance)
+        if (demandeVisiteMuseeInstance.hasErrors()) {
+            respond demandeVisiteMuseeInstance.errors, view:'create'
+            return
+        }
+        demandeVisiteMuseeInstance.save()
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'musee.label', default: 'Musee'), demandeVisiteMuseeInstance.id])
+                redirect demandeVisiteMuseeInstance
+            }
+            '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }
+        }
+
+        /*Musee musee = Musee.get(params.museeInstance)
         String dateDebutStr = params.dateDebut
         String dateFinStr = params.dateFin
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
@@ -93,7 +113,7 @@ class DemandeVisiteMuseeController {
                 redirect controller: "home", action: "index"
             }
             '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }
-        }
+        }*/
     }
 
     def edit(DemandeVisiteMusee demandeVisiteMuseeInstance) {
@@ -111,8 +131,8 @@ class DemandeVisiteMuseeController {
             respond demandeVisiteMuseeInstance.errors, view: 'edit'
             return
         }
-
-        demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMuseeInstance,demandeVisiteMuseeInstance.getMusee(),demandeVisiteMuseeInstance.getDemandeVisite())
+        demandeVisiteMuseeInstance.save()
+        //demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMuseeInstance,demandeVisiteMuseeInstance.getMusee(),demandeVisiteMuseeInstance.getDemandeVisite())
 
 
         request.withFormat {
@@ -131,8 +151,8 @@ class DemandeVisiteMuseeController {
             notFound()
             return
         }
-
-        demandeVisiteMuseeService.deleteDemandeVisiteMusee(demandeVisiteMuseeInstance)
+        demandeVisiteMuseeInstance.delete()
+        //demandeVisiteMuseeService.deleteDemandeVisiteMusee(demandeVisiteMuseeInstance)
 
 
         request.withFormat {

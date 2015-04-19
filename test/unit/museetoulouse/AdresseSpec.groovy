@@ -46,4 +46,15 @@ class AdresseSpec extends Specification {
         2           | "RUE DES ARCHIVES"    | null              | "Toulouse"
         2           | "RUE DES ARCHIVES"    | 31500             | ""
     }
+
+    void "test toString"(Integer unNumero, String uneRue, Integer unCodePostal, String uneVille) {
+        given: "une adresse initialise avec numero, rue, codePostal et ville"
+        Adresse adresse = new Adresse(numero: unNumero, rue: uneRue, codePostal: unCodePostal, ville: uneVille)
+
+        adresse.toString() == unNumero + " " + uneRue + " " + unCodePostal + " " + uneVille;
+
+        where:
+        unNumero    | uneRue                | unCodePostal      | uneVille
+        2           | "RUE DES ARCHIVES"    | 31500             | "Toulouse"
+    }
 }

@@ -34,6 +34,13 @@ class DemandeVisiteMuseeControllerSpec extends Specification {
     }
 
     void "Test the save action correctly persists an instance"() {
+        when: "Save is called for a domain instance that doesn't exist"
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'POST'
+        controller.update(null)
+
+        then: "A 405 error is returned"
+        response.status == 405
 
         when: "The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
@@ -57,6 +64,16 @@ class DemandeVisiteMuseeControllerSpec extends Specification {
         response.redirectedUrl == '/demandeVisiteMusee/show/1'
         controller.flash.message != null
         DemandeVisiteMusee.count() == 1
+    }
+
+    void "Test search of a DemandeVisiteMusee with a code"() {
+        when: "The codeSearch action is executed with an invalid instance"
+        def demandeVisiteMusee = new DemandeVisiteMusee()
+        demandeVisiteMusee.validate()
+        controller.codeSearch()
+
+        then:
+        flash.message == "Erreur Il faut remplir/modifier le champs code"
     }
 
     void "Test that the show action returns the correct model"() {

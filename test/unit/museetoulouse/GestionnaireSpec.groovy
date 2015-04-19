@@ -44,4 +44,15 @@ class GestionnaireSpec extends Specification {
         unNom   | _
         null    | _
     }
+
+    void "test toString"(String unNom, def _) {
+        given: "un gestionnaire initialise avec nom"
+        Gestionnaire gestionnaire = new Gestionnaire(nom: unNom)
+
+        gestionnaire.toString() == unNom
+
+        where:
+        unNom           | _
+        "Association"   | _
+    }
 }

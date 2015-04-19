@@ -48,4 +48,31 @@ class MuseeSpec extends Specification {
         "Augustins" | "14h-18h"             | Mock(Adresse) | null               | true
         "Augustins" | "14h-18h"             | Mock(Adresse) | Mock(Gestionnaire) | null
     }
+
+    void "test toString"(String unNom, def _) {
+        given: "un musee initialise avec nom"
+        Musee musee = new Musee(nom: unNom)
+
+        musee.toString() == unNom
+
+        where:
+        unNom           | _
+        "Augustins"     | _
+    }
+
+    void "test Constructeur"(String unNom, String unHorairesOuverture, String unTelephone, String unAccesMetro, String unAccesBus, Boolean unFavoris) {
+        given: "un gestionnaire initialise avec nom"
+        Musee musee = new Musee(unNom, unHorairesOuverture, unTelephone, unAccesMetro, unAccesBus, unFavoris)
+
+        musee.nom == unNom
+        musee.horairesOuverture == unHorairesOuverture
+        musee.telephone == unTelephone
+        musee.accesMetro == unAccesMetro
+        musee.accesBus == unAccesBus
+        musee.favoris == unFavoris
+
+        where:
+        unNom       | unHorairesOuverture   | unTelephone       | unAccesMetro      | unAccesBus    | unFavoris
+        "Augustins" | "14h-18h"             | "05 61 61 63 33"  | "Roseraie (A)"    | "36, 38"      | true
+    }
 }

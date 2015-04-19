@@ -39,6 +39,13 @@ class MuseeControllerSpec extends Specification {
     }
 
     void "Test the save action correctly persists an instance"() {
+        when: "Save is called for a domain instance that doesn't exist"
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'POST'
+        controller.update(null)
+
+        then: "A 405 error is returned"
+        response.status == 405
 
         when: "The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
@@ -97,6 +104,7 @@ class MuseeControllerSpec extends Specification {
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
+
         when: "Update is called for a domain instance that doesn't exist"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
