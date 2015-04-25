@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 
 @Transactional
 class DemandeVisiteService {
-    int getLastedCode(DemandeVisite uneDemandeVisite){
+    int getLastCode(){
         def latestConfig = DemandeVisite.listOrderById(max:1, order: "desc")[0]
         int code
         if(latestConfig != null){

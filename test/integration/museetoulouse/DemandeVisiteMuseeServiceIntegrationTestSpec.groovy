@@ -48,6 +48,32 @@ class DemandeVisiteMuseeServiceIntegrationTestSpec extends Specification {
 
     }
 
+    void "test recherche demandeVisite" () {
+        given:"une DemandeDeVisiteMusee"
+        DemandeVisiteMusee uneDemandeMusee = new DemandeVisiteMusee(dateDemande: new Date())
+
+        and:"un Musee existant en base et une DemandeVisite"
+        Musee unMusee = new Musee(nom:"toto",horairesOuverture:"17h",telephone:"00000000",accesBus:"B",accesMetro:"V",favoris:false)
+        Adresse uneAdresse = new Adresse(numero: 39,rue: "rue de truc",codePostal: 31000,ville: "Toulouse")
+        Gestionnaire unGestionnaire = new Gestionnaire(nom: "Dupont")
+        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(unMusee,unGestionnaire,uneAdresse)
+        DemandeVisite uneDemandeVisite = new DemandeVisite(code:1,dateDebutPeriode:new Date(),dateFinPeriode:new Date(),nbPersonnes:1,statut:"Valide");
+        DemandeVisiteMusee uneDemandeVisiteMusee = demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(uneDemandeMusee,unMusee,uneDemandeVisite)
+
+        when:"on recherche une demandeVisiteMusee"
+        DemandeVisiteMusee uneAutreDemandeVisiteMusee = demandeVisiteMuseeService.findsDemandeVisite(uneDemandeVisite)
+
+        then:"la demandeVisiteMusee retournéé est la même"
+        uneAutreDemandeVisiteMusee == uneDemandeVisiteMusee
+
+        when:"on recherche une demandeVisiteMusee avec une DemandeVisite inexistante"
+        DemandeVisite uneAutreDemandeVisite = new DemandeVisite(code:3,dateDebutPeriode:new Date(),dateFinPeriode:new Date(),nbPersonnes:5,statut:"En cours");
+        uneAutreDemandeVisiteMusee = demandeVisiteMuseeService.findsDemandeVisite(uneAutreDemandeVisite)
+
+        then:"la demandeVisiteMusee retournéé est la même"
+        uneAutreDemandeVisiteMusee == null
+    }
+
     void "test suppression d'un musee"() {
 
         given: "une DemandeVisiteMusee existante en base"

@@ -32,6 +32,7 @@ class HomeController {
         params.max = null
         [museeFavorisList:museeFavoris,museeFavorisCount:museeFavoris.totalCount,museeInstanceList: museeList, museeInstanceCount: museeList.totalCount]
     }
+
     def updateFavorisIndex(){
         def musee = Musee.get(params.id)
         if (musee){
@@ -40,8 +41,6 @@ class HomeController {
            // museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee,musee.getGestionnaire(),musee.getAdresse());
         }
     }
-
-
 
     def search() {
         if(nomMusee == null || params.nomMusee != null){

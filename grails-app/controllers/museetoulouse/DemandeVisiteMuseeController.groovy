@@ -104,7 +104,7 @@ class DemandeVisiteMuseeController {
                 break;
         }
         DemandeVisite demandeVisite = new DemandeVisite(dateDebutPeriode:dateDebut,dateFinPeriode:dateFin,nbPersonnes:nbPersonne,statut:statut)
-        int code = demandeVisiteService.getLastedCode(demandeVisite)
+        int code = demandeVisiteService.getLastCode(demandeVisite)
         demandeVisite.setCode(code)
         DemandeVisiteMusee demandeVisiteMuseeInstance = demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMusee,musee,demandeVisite)
         request.withFormat {
