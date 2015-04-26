@@ -14,8 +14,7 @@ class DemandeVisiteMuseeController {
     DemandeVisiteService demandeVisiteService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond DemandeVisiteMusee.list(params), model:[demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
-        //[demandeVisiteMuseeInstanceList:DemandeVisiteMusee.list(params),demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
+        [demandeVisiteMuseeInstanceList:DemandeVisiteMusee.list(params),demandeVisiteMuseeInstanceCount: DemandeVisiteMusee.count()]
     }
 
     def show(DemandeVisiteMusee demandeVisiteMuseeInstance) {
@@ -33,7 +32,7 @@ class DemandeVisiteMuseeController {
                 if(demandeVisiteMusee != null){
                     message = "OK Demande Musee Valide"
                 } else {
-                     message = "Erreur impossible de récupérer la liste des demandes"
+                    message = "Erreur impossible de récupérer la liste des demandes"
                 }
             } else {
                 message = "Erreur Pas de Code Valide"
@@ -46,14 +45,14 @@ class DemandeVisiteMuseeController {
     }
 
     def create() {
-        respond new DemandeVisiteMusee(params)
-        /*List<Musee> musee = museeService.searchFavoris(true)
-        render(view:'create',model:[museeInstance:musee]);*/
+        //respond new DemandeVisiteMusee(params)
+        List<Musee> musee = museeService.searchFavoris(true)
+        render(view:'create',model:[museeInstance:musee]);
     }
 
     @Transactional
-    def save(DemandeVisiteMusee demandeVisiteMuseeInstance) {
-        if (demandeVisiteMuseeInstance == null) {
+    def save() {
+        /*if (demandeVisiteMuseeInstance == null) {
             notFound()
             return
         }
@@ -70,9 +69,9 @@ class DemandeVisiteMuseeController {
                 redirect demandeVisiteMuseeInstance
             }
             '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }
-        }
+        }*/
 
-        /*Musee musee = Musee.get(params.museeInstance)
+        Musee musee = Musee.get(params.museeInstance)
         String dateDebutStr = params.dateDebut
         String dateFinStr = params.dateFin
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy")
@@ -104,7 +103,7 @@ class DemandeVisiteMuseeController {
                 break;
         }
         DemandeVisite demandeVisite = new DemandeVisite(dateDebutPeriode:dateDebut,dateFinPeriode:dateFin,nbPersonnes:nbPersonne,statut:statut)
-        int code = demandeVisiteService.getLastCode(demandeVisite)
+        int code = demandeVisiteService.getLastCode()
         demandeVisite.setCode(code)
         DemandeVisiteMusee demandeVisiteMuseeInstance = demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMusee,musee,demandeVisite)
         request.withFormat {
@@ -113,7 +112,7 @@ class DemandeVisiteMuseeController {
                 redirect controller: "home", action: "index"
             }
             '*' { respond demandeVisiteMuseeInstance, [status: CREATED] }
-        }*/
+        }
     }
 
     def edit(DemandeVisiteMusee demandeVisiteMuseeInstance) {
@@ -131,8 +130,8 @@ class DemandeVisiteMuseeController {
             respond demandeVisiteMuseeInstance.errors, view: 'edit'
             return
         }
-        demandeVisiteMuseeInstance.save()
-        //demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMuseeInstance,demandeVisiteMuseeInstance.getMusee(),demandeVisiteMuseeInstance.getDemandeVisite())
+        //demandeVisiteMuseeInstance.save()
+        demandeVisiteMuseeService.insertOrUpdateDemandeVisiteMuseeForMuseeAndDemandeVisite(demandeVisiteMuseeInstance,demandeVisiteMuseeInstance.getMusee(),demandeVisiteMuseeInstance.getDemandeVisite())
 
 
         request.withFormat {
@@ -151,8 +150,8 @@ class DemandeVisiteMuseeController {
             notFound()
             return
         }
-        demandeVisiteMuseeInstance.delete()
-        //demandeVisiteMuseeService.deleteDemandeVisiteMusee(demandeVisiteMuseeInstance)
+        //demandeVisiteMuseeInstance.delete()
+        demandeVisiteMuseeService.deleteDemandeVisiteMusee(demandeVisiteMuseeInstance)
 
 
         request.withFormat {

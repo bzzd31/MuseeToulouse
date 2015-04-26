@@ -37,8 +37,8 @@ class HomeController {
         def musee = Musee.get(params.id)
         if (musee){
             musee.favoris = !(musee.favoris)
-            museeService.save()
-           // museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee,musee.getGestionnaire(),musee.getAdresse());
+            //museeService.save()
+            museeService.insertOrUpdateMuseeForGestionnaireAndAdress(musee,musee.getGestionnaire(),musee.getAdresse());
         }
     }
 

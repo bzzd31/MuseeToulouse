@@ -37,8 +37,8 @@ class MuseeController {
             respond museeInstance.errors, view:'create'
             return
         }
-        museeInstance.save()
-        //museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
+        //museeInstance.save()
+        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
 
         request.withFormat {
             form multipartForm {
@@ -64,8 +64,8 @@ class MuseeController {
             respond museeInstance.errors, view:'edit'
             return
         }
-        museeInstance.save()
-        //museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
+        //museeInstance.save()
+        museeService.insertOrUpdateMuseeForGestionnaireAndAdress(museeInstance,museeInstance.getGestionnaire(),museeInstance.getAdresse());
 
         request.withFormat {
             form multipartForm {
@@ -83,8 +83,8 @@ class MuseeController {
             notFound()
             return
         }
-        museeInstance.delete()
-        //museeService.deleteMusee(museeInstance);
+        //museeInstance.delete()
+        museeService.deleteMusee(museeInstance);
 
         request.withFormat {
             form multipartForm {
